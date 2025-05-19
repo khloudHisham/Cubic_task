@@ -11,11 +11,7 @@
     "BROWSE": "or browse files",
     "NAME_REQUIRED": "Name is required",
     "EMAIL_REQUIRED": "Email is required",
-<<<<<<< HEAD
     "EMAIL_INVALID": "Please enter valid email",
     "PHONE_REQUIRED": "Phone is required"
-=======
-    "EMAIL_INVALID": "Please enter valid email"
->>>>>>> c266b59f1e4829322e58646fddf3eb94ef9b6d52
   }
 }
