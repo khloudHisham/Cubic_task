@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { CustomerFormComponent } from './pages/customer-form/customer-form.component';
-import { UsersComponent } from './pages/users/users.component';
-import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { BlankComponent } from './layouts/blank-layout/blank.component';
-import { UserDetailsComponent } from './pages/user-details/user-details.component';
+import { CustomerFormComponent } from './components/customer-form/customer-form.component';
+import { UsersComponent } from './components/users/users.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { NotfoundComponent } from './components/notfound/notfound.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'customer-form', pathMatch: 'full' },
