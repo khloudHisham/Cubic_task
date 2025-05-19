@@ -12,6 +12,5 @@
     "NAME_REQUIRED": "Name is required",
     "EMAIL_REQUIRED": "Email is required",
     "EMAIL_INVALID": "Please enter valid email",
-    "PHONE_REQUIRED": "Phone is required",
   }
 }
