@@ -17,19 +17,23 @@ import { FileUploadService } from '../../shared/services/file-service/file-uploa
   templateUrl: './customer-form.component.html',
   styleUrls: ['./customer-form.component.css']
 })
-export class CustomerFormComponent implements OnInit {
+export class CustomerFormComponent  {
   private readonly fb = inject(FormBuilder);
   private readonly translate = inject(TranslateService);
   protected readonly fileUploadService = inject(FileUploadService);
   private readonly toastr = inject(ToastrService);
 
-  form!: FormGroup;
+  form: FormGroup;
   currentLang: string = 'en';
 
-  ngOnInit(): void {
-    this.initializeForm();
-    this.initTranslate();
+  constructor() {
+    this.form = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]]
+    });
   }
+
 
   removeFile(index: number): void {
     this.fileUploadService.removeFile(index);
@@ -51,8 +55,6 @@ export class CustomerFormComponent implements OnInit {
     }
   }
 
-  // تم حذف getImagePreview لأنها صارت غير ضرورية بعد حفظ previewUrl
-
   initTranslate(): void {
     this.translate.setDefaultLang('en');
     this.translate.use('en');
@@ -66,21 +68,12 @@ export class CustomerFormComponent implements OnInit {
     this.translate.use(lang);
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     
-    // Update toast position based on language
     this.toastr.toastrConfig.positionClass = lang === 'ar' ? 'toast-top-left' : 'toast-top-right';
-  }
-
-  initializeForm(): void {
-    this.form = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
-    });
   }
 
   onSubmit(): void {
     if (this.form.valid) {
-      console.log('Form submitted:', this.form.value);
+      console.log(this.form.value);
       this.toastr.success(
         this.currentLang === 'ar' ? 'تم إرسال النموذج بنجاح!' : 'Form submitted successfully!',
         this.currentLang === 'ar' ? 'نجاح' : 'Success',
@@ -89,7 +82,10 @@ export class CustomerFormComponent implements OnInit {
         }
       );
     } else {
-      this.form.markAllAsTouched();
+      Object.keys(this.form.controls).forEach(key => {
+        const control = this.form.get(key);
+        control?.markAsTouched();
+      });
       this.toastr.error(
         this.currentLang === 'ar' ? 'الرجاء ملء جميع الحقول المطلوبة بشكل صحيح!' : 'Please fill all required fields correctly!',
         this.currentLang === 'ar' ? 'خطأ' : 'Error',
@@ -101,6 +97,6 @@ export class CustomerFormComponent implements OnInit {
   }
 
   get isFormValid(): boolean {
-    return this.form.valid && this.form.dirty;
+    return this.form.valid;
   }
 }

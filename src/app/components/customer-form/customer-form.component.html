@@ -3,12 +3,12 @@
     <button class="btn btn-sm btn-outline-primary me-2" 
             (click)="switchLanguage('en')"
             [class.active]="currentLang === 'en'">
-      <i class="bi bi-globe me-1"></i>English
+      English
     </button>
     <button class="btn btn-sm btn-outline-primary" 
             (click)="switchLanguage('ar')"
             [class.active]="currentLang === 'ar'">
-      <i class="bi bi-globe me-1"></i>العربية
+      العربية
     </button>
   </div>
 
@@ -16,72 +16,60 @@
     <div class="col-md-8">
       <div class="card shadow-lg">
         <div class="card-header bg-primary text-white py-3">
-          <h3 class="mb-0"><i class="bi bi-person-plus me-2"></i>{{ 'FORM.TITLE' | translate }}</h3>
+          <h3 class="mb-0">{{ 'FORM.TITLE' | translate }}</h3>
         </div>
         <div class="card-body p-4">
           <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="form-group">
+            <div class="form-group mb-3">
               <label for="name">{{ 'FORM.NAME' | translate }}</label>
               <div class="input-group">
-                <span class="input-group-text">
-                  <i class="bi bi-person"></i>
-                </span>
                 <input 
                   type="text" 
                   id="name" 
                   formControlName="name" 
                   class="form-control"
                   [placeholder]="'FORM.NAME_PLACEHOLDER' | translate"
-                  [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched"
                 >
               </div>
-              <div class="invalid-feedback" *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">
+              <div class="text-danger" *ngIf="form.get('name')?.errors?.['required'] && (form.get('name')?.dirty || form.get('name')?.touched)">
                 {{ 'FORM.NAME_REQUIRED' | translate }}
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-3">
               <label for="email">{{ 'FORM.EMAIL' | translate }}</label>
               <div class="input-group">
-                <span class="input-group-text">
-                  <i class="bi bi-envelope"></i>
-                </span>
                 <input 
                   type="email" 
                   id="email" 
                   formControlName="email" 
                   class="form-control"
                   [placeholder]="'FORM.EMAIL_PLACEHOLDER' | translate"
-                  [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched"
                 >
               </div>
-              <div class="invalid-feedback" *ngIf="form.get('email')?.errors?.['required'] && form.get('email')?.touched">
+              <div class="text-danger" *ngIf="form.get('email')?.errors?.['required'] && (form.get('email')?.dirty || form.get('email')?.touched)">
                 {{ 'FORM.EMAIL_REQUIRED' | translate }}
               </div>
-              <div class="invalid-feedback" *ngIf="form.get('email')?.errors?.['email'] && form.get('email')?.touched">
+              <div class="text-danger" *ngIf="form.get('email')?.errors?.['email'] && (form.get('email')?.dirty || form.get('email')?.touched)">
                 {{ 'FORM.INVALID_EMAIL' | translate }}
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-3">
               <label for="phone">{{ 'FORM.PHONE' | translate }}</label>
               <div class="input-group">
-                <span class="input-group-text">
-                  <i class="bi bi-telephone"></i>
-                </span>
                 <input 
                   type="text" 
                   id="phone" 
                   formControlName="phone" 
                   class="form-control"
                   [placeholder]="'FORM.PHONE_PLACEHOLDER' | translate"
-                  [class.is-invalid]="form.get('phone')?.invalid && form.get('phone')?.touched"
                 >
               </div>
-              <div class="invalid-feedback" *ngIf="form.get('phone')?.errors?.['required'] && form.get('phone')?.touched">
+              <div class="text-danger" *ngIf="form.get('phone')?.errors?.['required'] && (form.get('phone')?.dirty || form.get('phone')?.touched)">
                 {{ 'FORM.PHONE_REQUIRED' | translate }}
               </div>
-              <div class="invalid-feedback" *ngIf="form.get('phone')?.errors?.['pattern'] && form.get('phone')?.touched">
+              <div class="text-danger" *ngIf="form.get('phone')?.errors?.['pattern'] && (form.get('phone')?.dirty || form.get('phone')?.touched)">
                 {{ 'FORM.PHONE_INVALID' | translate }}
               </div>
             </div>
@@ -93,7 +81,6 @@
                    (dragover)="$event.preventDefault()"
                    (click)="fileInput.click()">
                 <input type="file" #fileInput (change)="fileBrowseHandler($event)" multiple hidden>
-                <i class="bi bi-cloud-arrow-up fs-1 text-primary mb-3"></i>
                 <p class="mb-2">{{ 'FORM.DRAG_DROP' | translate }}</p>
                 <p class="text-muted small">{{ 'FORM.BROWSE' | translate }}</p>
               </div>
@@ -101,7 +88,7 @@
 
             @if (fileUploadService.files.length > 0) {
               <div class="mb-4">
-                <h5 class="mb-3"><i class="bi bi-files me-2"></i>{{ 'FORM.UPLOADED_FILES' | translate }}</h5>
+                <h5 class="mb-3">{{ 'FORM.UPLOADED_FILES' | translate }}</h5>
                 <div class="file-list-container">
                   <div class="file-list">
                     @for (item of fileUploadService.files; track item) {
@@ -110,11 +97,10 @@
                           <div class="directory-item">
                             <div class="d-flex justify-content-between align-items-center">
                               <div class="d-flex align-items-center">
-                                <i class="bi bi-folder me-2"></i>
                                 <span>{{ item.name }}</span>
                               </div>
                               <button type="button" class="btn btn-sm btn-danger" (click)="removeFile($index)">
-                                <i class="bi bi-trash"></i>
+                                Delete
                               </button>
                             </div>
                             @if (item.children && item.children.length > 0) {
@@ -124,7 +110,6 @@
                                     @if (child.isDirectory) {
                                       <div class="directory-item">
                                         <div class="d-flex align-items-center">
-                                          <i class="bi bi-folder me-2"></i>
                                           <span>{{ child.name }}</span>
                                         </div>
                                         @if (child.children && child.children.length > 0) {
@@ -133,10 +118,6 @@
                                               <div class="file-item">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                   <div>
-                                                    <i class="bi" [ngClass]="{
-                                                      'bi-file-earmark-text': !grandChild.isImage,
-                                                      'bi-image': grandChild.isImage
-                                                    }"></i>
                                                     {{ grandChild.name }}
                                                   </div>
                                                 </div>
@@ -154,10 +135,6 @@
                                       <div class="file-item">
                                         <div class="d-flex justify-content-between align-items-center">
                                           <div>
-                                            <i class="bi" [ngClass]="{
-                                              'bi-file-earmark-text': !child.isImage,
-                                              'bi-image': child.isImage
-                                            }"></i>
                                             {{ child.name }}
                                           </div>
                                         </div>
@@ -177,14 +154,10 @@
                           <div class="file-item">
                             <div class="d-flex justify-content-between align-items-center">
                               <div>
-                                <i class="bi" [ngClass]="{
-                                  'bi-file-earmark-text': !item.isImage,
-                                  'bi-image': item.isImage
-                                }"></i>
                                 {{ item.name }}
                               </div>
                               <button type="button" class="btn btn-sm btn-danger" (click)="removeFile($index)">
-                                <i class="bi bi-trash"></i>
+                                Delete
                               </button>
                             </div>
                             @if (item.isImage) {
@@ -206,7 +179,6 @@
                       class="btn btn-primary btn-lg" 
                       [disabled]="!isFormValid"
                       [class.btn-secondary]="!isFormValid">
-                <i class="bi bi-send me-2"></i>
                 {{ 'FORM.SUBMIT' | translate }}
               </button>
             </div>
