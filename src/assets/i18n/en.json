@@ -1,0 +1,18 @@
+{
+  "FORM": {
+    "UPLOADED_FILES": "Uploaded Files",
+    "TITLE": "Customer Registration",
+    "NAME": "Full Name",
+    "EMAIL": "Email Address",
+    "PHONE": "Phone Number",
+    "ATTACHMENTS": "Attachments",
+    "SUBMIT": "Submit",
+    "DRAG_DROP": "Drag & drop files here",
+    "BROWSE": "or browse files",
+    "NAME_REQUIRED": "Name is required",
+    "EMAIL_REQUIRED": "Email is required",
+    "EMAIL_INVALID": "Please enter valid email",
+    "PHONE_REQUIRED": "Phone is required",
+    "BRANCH_REQUIRED": "Branch is required"
+  }
+}

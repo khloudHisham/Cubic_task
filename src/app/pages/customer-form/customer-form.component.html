@@ -1,0 +1,260 @@
+<div class="container mt-5" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+  <div class="language-switcher mb-3 text-end">
+    <button
+      class="btn btn-sm btn-outline-primary me-2"
+      (click)="switchLanguage('en')"
+      [class.active]="currentLang === 'en'"
+    >
+      English
+    </button>
+    <button
+      class="btn btn-sm btn-outline-primary"
+      (click)="switchLanguage('ar')"
+      [class.active]="currentLang === 'ar'"
+    >
+      عربي
+    </button>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">{{ "FORM.TITLE" | translate }}</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label class="form-label">{{ "FORM.NAME" | translate }}</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                [class.is-invalid]="
+                  form.get('name')?.invalid && form.get('name')?.touched
+                "
+              />
+              @if (form.get('name')?.invalid && form.get('name')?.touched) {
+              <div class="invalid-feedback">
+                {{ "FORM.NAME_REQUIRED" | translate }}
+              </div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">{{ "FORM.EMAIL" | translate }}</label>
+              <input
+                type="email"
+                class="form-control"
+                formControlName="email"
+                [class.is-invalid]="
+                  form.get('email')?.invalid && form.get('email')?.touched
+                "
+              />
+              @if (form.get('email')?.invalid && form.get('email')?.touched) {
+              <div class="invalid-feedback">
+                @if (form.get('email')?.errors?.['required']) {
+                <span>{{ "FORM.EMAIL_REQUIRED" | translate }}</span>
+                } @if (form.get('email')?.errors?.['email']) {
+                <span>{{ "FORM.EMAIL_INVALID" | translate }}</span>
+                }
+              </div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">{{ "FORM.PHONE" | translate }}</label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="phone"
+                [class.is-invalid]="
+                  form.get('phone')?.invalid && form.get('phone')?.touched
+                "
+              />
+              @if (form.get('phone')?.invalid && form.get('phone')?.touched) {
+              <div class="invalid-feedback">
+                @if (form.get('phone')?.errors?.['required']) {
+                <span>{{ "FORM.PHONE_REQUIRED" | translate }}</span>
+                } @if (form.get('phone')?.errors?.['pattern']) {
+                <span>{{ "FORM.PHONE_INVALID" | translate }}</span>
+                }
+              </div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">{{
+                "FORM.ATTACHMENTS" | translate
+              }}</label>
+              <div
+                class="drop-zone"
+                (drop)="onFileDropped($event)"
+                (dragover)="$event.preventDefault()"
+                (click)="fileInput.click()"
+              >
+                <input
+                  type="file"
+                  #fileInput
+                  (change)="fileBrowseHandler($event)"
+                  multiple
+                  hidden
+                />
+                <div class="text-center">
+                  <i class="bi bi-cloud-arrow-up fs-1"></i>
+                  <p>{{ "FORM.DRAG_DROP" | translate }}</p>
+                  <p class="text-muted">{{ "FORM.BROWSE" | translate }}</p>
+                </div>
+              </div>
+            </div>
+
+            @if (fileUploadService.files.length > 0) {
+            <div class="mb-3">
+              <h5>{{ "FORM.UPLOADED_FILES" | translate }}</h5>
+              <div class="file-list">
+                @for (item of fileUploadService.files; track item) {
+                <div class="file-system-item">
+                  @if (item.isDirectory) {
+                  <div class="directory-item">
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <div class="d-flex align-items-center">
+                        <i class="bi bi-folder me-2"></i>
+                        <span>{{ item.name }}</span>
+                      </div>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-danger"
+                        (click)="removeFile($index)"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                    @if (item.children && item.children.length > 0) {
+                    <div class="ms-4 mt-2">
+                      @for (child of item.children; track child) {
+                      <div class="file-system-item">
+                        @if (child.isDirectory) {
+                        <div class="directory-item">
+                          <div class="d-flex align-items-center">
+                            <i class="bi bi-folder me-2"></i>
+                            <span>{{ child.name }}</span>
+                          </div>
+                          @if (child.children && child.children.length > 0) {
+                          <div class="ms-4 mt-2">
+                            @for (grandChild of child.children; track
+                            grandChild) {
+                            <div class="file-item">
+                              <div
+                                class="d-flex justify-content-between align-items-center"
+                              >
+                                <div>
+                                  <i
+                                    class="bi"
+                                    [ngClass]="{
+                                      'bi-file-earmark-text':
+                                        !grandChild.isImage,
+                                      'bi-image': grandChild.isImage
+                                    }"
+                                  ></i>
+                                  {{ grandChild.name }}
+                                </div>
+                              </div>
+                              @if (grandChild.isImage) {
+                              <div class="mt-2">
+                                <img
+                                  [src]="grandChild.previewUrl"
+                                  class="img-thumbnail"
+                                  style="max-height: 100px"
+                                />
+                              </div>
+                              }
+                            </div>
+                            }
+                          </div>
+                          }
+                        </div>
+                        } @else {
+                        <div class="file-item">
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <div>
+                              <i
+                                class="bi"
+                                [ngClass]="{
+                                  'bi-file-earmark-text': !child.isImage,
+                                  'bi-image': child.isImage
+                                }"
+                              ></i>
+                              {{ child.name }}
+                            </div>
+                          </div>
+                          @if (child.isImage) {
+                          <div class="mt-2">
+                            <img
+                              [src]="child.previewUrl"
+                              class="img-thumbnail"
+                              style="max-height: 100px"
+                            />
+                          </div>
+                          }
+                        </div>
+                        }
+                      </div>
+                      }
+                    </div>
+                    }
+                  </div>
+                  } @else {
+                  <div class="file-item">
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <div>
+                        <i
+                          class="bi"
+                          [ngClass]="{
+                            'bi-file-earmark-text': !item.isImage,
+                            'bi-image': item.isImage
+                          }"
+                        ></i>
+                        {{ item.name }}
+                      </div>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-danger"
+                        (click)="removeFile($index)"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                    @if (item.isImage) {
+                    <div class="mt-2">
+                      <img
+                        [src]="item.previewUrl"
+                        class="img-thumbnail"
+                        style="max-height: 100px"
+                      />
+                    </div>
+                    }
+                  </div>
+                  }
+                </div>
+                }
+              </div>
+            </div>
+            }
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">
+                {{ "FORM.SUBMIT" | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
