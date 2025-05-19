@@ -1,0 +1,29 @@
+.card {
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .btn-outline-primary {
+    transition: all 0.2s ease;
+  }
+  
+  .btn-outline-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bi {
+    font-size: 1.2rem;
+  }
+  
+  .text-muted {
+    font-size: 0.85rem;
+  }
+  
+  .fw-medium {
+    font-weight: 500;
+  }

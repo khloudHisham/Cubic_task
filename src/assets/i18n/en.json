@@ -2,9 +2,9 @@
   "FORM": {
     "UPLOADED_FILES": "Uploaded Files",
     "TITLE": "Customer Registration",
-    "NAME": "Full Name",
-    "EMAIL": "Email Address",
-    "PHONE": "Phone Number",
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "PHONE": "Phone",
     "ATTACHMENTS": "Attachments",
     "SUBMIT": "Submit",
     "DRAG_DROP": "Drag & drop files here",
@@ -12,6 +12,12 @@
     "NAME_REQUIRED": "Name is required",
     "EMAIL_REQUIRED": "Email is required",
     "EMAIL_INVALID": "Please enter valid email",
-    "PHONE_REQUIRED": "Phone is required"
+    "PHONE_REQUIRED": "Phone is required",
+    "REQUIRED": "This field is required",
+    "INVALID_EMAIL": "Please enter a valid email address",
+    "PHONE_INVALID": "Please enter a valid 10-digit phone number",
+    "NAME_PLACEHOLDER": "Enter your full name",
+    "EMAIL_PLACEHOLDER": "Enter your email address",
+    "PHONE_PLACEHOLDER": "Enter your phone number"
   }
 }

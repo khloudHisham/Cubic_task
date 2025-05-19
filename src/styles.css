@@ -1,0 +1,52 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'ngx-toastr/toastr';
+
+#toast-container {
+  position: fixed;
+  z-index: 999999;
+  pointer-events: auto;
+  top: 0;
+  right: 0;
+  left: auto;
+  bottom: auto;
+}
+
+.toast-container {
+  position: fixed;
+  z-index: 999999;
+  pointer-events: auto;
+  top: 0;
+  right: 0;
+  left: auto;
+  bottom: auto;
+}
+
+.toast-top-right {
+  top: 12px;
+  right: 12px;
+  left: auto;
+  bottom: auto;
+}
+
+.toast-top-left {
+  top: 12px;
+  left: 12px;
+  right: auto;
+  bottom: auto;
+}
+
+.toast {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 6px;
+  padding: 15px 15px 15px 50px;
+  width: 300px;
+  border-radius: 3px;
+  background-position: 15px center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  box-shadow: 0 0 12px #999999;
+  color: #FFFFFF;
+  opacity: 1;
+}

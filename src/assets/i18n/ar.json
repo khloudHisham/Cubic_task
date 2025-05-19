@@ -2,16 +2,22 @@
   "FORM": {
     "UPLOADED_FILES": "الملفات المرفوعه",
     "TITLE": "تسجيل العميل",
-    "NAME": "الاسم الكامل",
+    "NAME": "الاسم",
     "EMAIL": "البريد الإلكتروني",
     "PHONE": "رقم الهاتف",
     "ATTACHMENTS": "المرفقات",
-    "SUBMIT": "تسجيل",
+    "SUBMIT": "إرسال",
     "DRAG_DROP": "اسحب وأفلت الملفات هنا",
     "BROWSE": "أو اختر ملفات",
+    "REQUIRED": "هذا الحقل مطلوب",
+    "INVALID_EMAIL": "الرجاء إدخال بريد إلكتروني صحيح",
     "NAME_REQUIRED": "الاسم مطلوب",
     "EMAIL_REQUIRED": "البريد الإلكتروني مطلوب",
     "EMAIL_INVALID": "يرجى إدخال بريد صحيح",
-    "PHONE_REQUIRED": "رقم الهاتف مطلوب"
+    "PHONE_REQUIRED": "رقم الهاتف مطلوب",
+    "PHONE_INVALID": "الرجاء إدخال رقم هاتف صحيح مكون من 10 أرقام",
+    "NAME_PLACEHOLDER": "أدخل اسمك الكامل",
+    "EMAIL_PLACEHOLDER": "أدخل بريدك الإلكتروني",
+    "PHONE_PLACEHOLDER": "أدخل رقم هاتفك"
   }
 }

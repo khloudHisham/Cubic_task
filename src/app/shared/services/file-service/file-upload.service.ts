@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IFile } from '../../interfaces/Ifile/IFile';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class FileUploadService {
   files: IFile[] = [];
@@ -20,7 +20,7 @@ export class FileUploadService {
             size: file.size,
             isImage: isImage,
             previewUrl: isImage ? URL.createObjectURL(file) : null,
-            path: path + '/' + entry.name,
+            path: path + '/' + entry.name
           });
         });
       });
@@ -29,12 +29,12 @@ export class FileUploadService {
         name: entry.name,
         isDirectory: true,
         children: [],
-        path: path + '/' + entry.name,
+        path: path + '/' + entry.name
       };
 
       const reader = entry.createReader();
       const entries = await this.readEntries(reader);
-
+      
       for (const entry of entries) {
         const child = await this.processEntry(entry, directory.path);
         directory.children?.push(child);
@@ -72,7 +72,7 @@ export class FileUploadService {
           type: file.type,
           size: file.size,
           isImage: isImage,
-          previewUrl: isImage ? URL.createObjectURL(file) : null,
+          previewUrl: isImage ? URL.createObjectURL(file) : null
         });
       }
     }

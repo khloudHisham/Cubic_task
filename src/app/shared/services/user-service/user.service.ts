@@ -23,10 +23,10 @@ export class UserService {
           users.forEach(user => this.usersMap.set(user.id, user));
           this.usersLoaded = true;
         }),
-        shareReplay(1) // Ensures only one API call and shares the result
+        shareReplay(1) 
       );
     }
-
+    
     return this.users$;
   }
 
