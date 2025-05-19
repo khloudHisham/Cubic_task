@@ -12,11 +12,6 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
   
-// getAllUsers():Observable<any>
-//   {
-//     //return obervable
-// return this.httpClient.get('https://fake-json-api.mock.beeceptor.com/users')
-//   }
 
 getAllUsers(): Observable<any[]> {
   if (this.usersLoaded) {
@@ -28,17 +23,11 @@ getAllUsers(): Observable<any[]> {
       users.forEach(user => this.usersMap.set(user.id, user));
       this.usersLoaded = true;
     }),
-    // Return as array again
     tap(() => console.log('Fetched users from API')),
   );
 }
 
   
-//    getSpecificUser(id:number):Observable<any>
-//   {
-//     //return obervable
-// return this.httpClient.get(https://fake-json-api.mock.beeceptor.com/users/${id})
-//   }
 
 getSpecificUser(id: number): Observable<any> {
   const cachedUser = this.usersMap.get(id);
