@@ -15,7 +15,7 @@
     "PHONE_REQUIRED": "Phone is required",
     "REQUIRED": "This field is required",
     "INVALID_EMAIL": "Please enter a valid email address",
-    "PHONE_INVALID": "Please enter a valid 10-digit phone number",
+    "PHONE_INVALID": "Please enter a valid 11-digit phone number",
     "NAME_PLACEHOLDER": "Enter your full name",
     "EMAIL_PLACEHOLDER": "Enter your email address",
     "PHONE_PLACEHOLDER": "Enter your phone number"

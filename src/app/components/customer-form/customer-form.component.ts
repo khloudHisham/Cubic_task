@@ -68,6 +68,7 @@ export class CustomerFormComponent  {
     this.translate.use(lang);
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     
+    // Update toast position based on language
     this.toastr.toastrConfig.positionClass = lang === 'ar' ? 'toast-top-left' : 'toast-top-right';
   }
 
@@ -82,6 +83,7 @@ export class CustomerFormComponent  {
         }
       );
     } else {
+      // Mark all fields as touched to trigger validation
       Object.keys(this.form.controls).forEach(key => {
         const control = this.form.get(key);
         control?.markAsTouched();

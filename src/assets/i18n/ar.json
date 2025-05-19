@@ -15,7 +15,7 @@
     "EMAIL_REQUIRED": "البريد الإلكتروني مطلوب",
     "EMAIL_INVALID": "يرجى إدخال بريد صحيح",
     "PHONE_REQUIRED": "رقم الهاتف مطلوب",
-    "PHONE_INVALID": "الرجاء إدخال رقم هاتف صحيح مكون من 10 أرقام",
+    "PHONE_INVALID": "الرجاء إدخال رقم هاتف صحيح مكون من 11 أرقام",
     "NAME_PLACEHOLDER": "أدخل اسمك الكامل",
     "EMAIL_PLACEHOLDER": "أدخل بريدك الإلكتروني",
     "PHONE_PLACEHOLDER": "أدخل رقم هاتفك"
