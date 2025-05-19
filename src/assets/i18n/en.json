@@ -11,6 +11,6 @@
     "BROWSE": "or browse files",
     "NAME_REQUIRED": "Name is required",
     "EMAIL_REQUIRED": "Email is required",
-    "EMAIL_INVALID": "Please enter valid email",
+    "EMAIL_INVALID": "Please enter valid email"
   }
 }
