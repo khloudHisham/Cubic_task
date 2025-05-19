@@ -1,21 +1,54 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private usersMap = new Map<number, any>();
+  private usersLoaded = false;
 
-constructor(private httpClient:HttpClient) { }
+
+  constructor(private httpClient: HttpClient) { }
   
-getAllUsers():Observable<any>
-  {
-return this.httpClient.get('https://fake-json-api.mock.beeceptor.com/users')
+// getAllUsers():Observable<any>
+//   {
+//     //return obervable
+// return this.httpClient.get('https://fake-json-api.mock.beeceptor.com/users')
+//   }
+
+getAllUsers(): Observable<any[]> {
+  if (this.usersLoaded) {
+    return of(Array.from(this.usersMap.values()));
   }
 
-   getSpecificUser(id:number):Observable<any>
-  {
-return this.httpClient.get(`https://fake-json-api.mock.beeceptor.com/users/${id}`)
+  return this.httpClient.get<any[]>('https://fake-json-api.mock.beeceptor.com/users').pipe(
+    tap((users: any[]) => {
+      users.forEach(user => this.usersMap.set(user.id, user));
+      this.usersLoaded = true;
+    }),
+    // Return as array again
+    tap(() => console.log('Fetched users from API')),
+  );
+}
+
+  
+//    getSpecificUser(id:number):Observable<any>
+//   {
+//     //return obervable
+// return this.httpClient.get(https://fake-json-api.mock.beeceptor.com/users/${id})
+//   }
+
+getSpecificUser(id: number): Observable<any> {
+  const cachedUser = this.usersMap.get(id);
+  if (cachedUser) {
+    return of(cachedUser);
   }
+
+  return this.httpClient.get<any>(`https://fake-json-api.mock.beeceptor.com/users/${id}`).pipe(
+    tap(user => this.usersMap.set(user.id, user))
+  );
+}
+
 }
