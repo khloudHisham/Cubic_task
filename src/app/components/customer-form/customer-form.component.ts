@@ -9,15 +9,11 @@ import { FileUploadService } from '../../shared/services/file-service/file-uploa
 @Component({
   selector: 'app-customer-form',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    TranslateModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './customer-form.component.html',
-  styleUrls: ['./customer-form.component.css']
+  styleUrls: ['./customer-form.component.css'],
 })
-export class CustomerFormComponent  {
+export class CustomerFormComponent {
   private readonly fb = inject(FormBuilder);
   private readonly translate = inject(TranslateService);
   protected readonly fileUploadService = inject(FileUploadService);
@@ -30,10 +26,12 @@ export class CustomerFormComponent  {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]]
+      phone: [
+        '',
+        [Validators.required, Validators.pattern('^01[0-2,5][0-9]{8}$')],
+      ],
     });
   }
-
 
   removeFile(index: number): void {
     this.fileUploadService.removeFile(index);
@@ -67,32 +65,39 @@ export class CustomerFormComponent  {
     this.currentLang = lang;
     this.translate.use(lang);
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    
+
     // Update toast position based on language
-    this.toastr.toastrConfig.positionClass = lang === 'ar' ? 'toast-top-left' : 'toast-top-right';
+    this.toastr.toastrConfig.positionClass =
+      lang === 'ar' ? 'toast-top-left' : 'toast-top-right';
   }
 
   onSubmit(): void {
     if (this.form.valid) {
       console.log(this.form.value);
       this.toastr.success(
-        this.currentLang === 'ar' ? 'تم إرسال النموذج بنجاح!' : 'Form submitted successfully!',
+        this.currentLang === 'ar'
+          ? 'تم إرسال النموذج بنجاح!'
+          : 'Form submitted successfully!',
         this.currentLang === 'ar' ? 'نجاح' : 'Success',
         {
-          positionClass: this.currentLang === 'ar' ? 'toast-top-left' : 'toast-top-right'
+          positionClass:
+            this.currentLang === 'ar' ? 'toast-top-left' : 'toast-top-right',
         }
       );
     } else {
       // Mark all fields as touched to trigger validation
-      Object.keys(this.form.controls).forEach(key => {
+      Object.keys(this.form.controls).forEach((key) => {
         const control = this.form.get(key);
         control?.markAsTouched();
       });
       this.toastr.error(
-        this.currentLang === 'ar' ? 'الرجاء ملء جميع الحقول المطلوبة بشكل صحيح!' : 'Please fill all required fields correctly!',
+        this.currentLang === 'ar'
+          ? 'الرجاء ملء جميع الحقول المطلوبة بشكل صحيح!'
+          : 'Please fill all required fields correctly!',
         this.currentLang === 'ar' ? 'خطأ' : 'Error',
         {
-          positionClass: this.currentLang === 'ar' ? 'toast-top-left' : 'toast-top-right'
+          positionClass:
+            this.currentLang === 'ar' ? 'toast-top-left' : 'toast-top-right',
         }
       );
     }

@@ -1,32 +1,20 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpLoaderFactory } from './translate-loader';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
+import { HttpLoaderFactory } from './shared/utlis/translate-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(withFetch()),
-   {
+    {
       provide: TranslateLoader,
       useFactory: HttpLoaderFactory,
-      deps: [HttpClient]
-    },
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }).providers!,
-
-    {
-      provide: 'DEFAULT_LANGUAGE',
-      useValue: 'en'
+      deps: [HttpClient],
     },
     provideAnimations(),
     provideToastr({
@@ -43,6 +31,19 @@ export const appConfig: ApplicationConfig = {
       easeTime: 300,
       maxOpened: 1,
       autoDismiss: true,
-    })
-  ]
+    }),
+    importProvidersFrom(
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient],
+        },
+      })
+    ),
+    {
+      provide: 'DEFAULT_LANGUAGE',
+      useValue: 'en',
+    },
+  ],
 };
