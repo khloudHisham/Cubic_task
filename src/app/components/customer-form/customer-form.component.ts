@@ -43,7 +43,13 @@ export class CustomerFormComponent {
 
   removeFile(index: number): void {
     this.fileUploadService.removeFile(index);
-    this.toastrService.warning('File removed successfully!', 'Warning');
+    const fileRemovedText = this.translateService.instant('FORM.FILE_REMOVED');
+    const titleWarningText =
+      this.translateService.instant('FORM.TITLE_WARNING');
+    this.toastrService.warning(fileRemovedText, titleWarningText, {
+      positionClass:
+        this.currentLang === 'ar' ? 'toast-top-left' : 'toast-top-right',
+    });
   }
 
   async onFileDropped(event: DragEvent) {
@@ -51,7 +57,12 @@ export class CustomerFormComponent {
     if (event.dataTransfer?.items) {
       await this.fileUploadService.addFiles(event.dataTransfer.items);
     }
-    this.toastrService.info('Files added successfully!', 'Info');
+    const fileAddedText = this.translateService.instant('FORM.FILE_ADDED');
+    const titleInfoText = this.translateService.instant('FORM.TITLE_INFO');
+    this.toastrService.info(fileAddedText, titleInfoText, {
+      positionClass:
+        this.currentLang === 'ar' ? 'toast-top-left' : 'toast-top-right',
+    });
   }
 
   async fileBrowseHandler(event: Event) {
@@ -74,37 +85,43 @@ export class CustomerFormComponent {
   onSubmit(): void {
     if (this.form.valid) {
       console.log(this.form.value);
-      this.toastrService.success(
-        this.currentLang === 'ar'
-          ? 'تم إرسال النموذج بنجاح!'
-          : 'Form submitted successfully!',
-        this.currentLang === 'ar' ? 'نجاح' : 'Success',
-        {
-          positionClass:
-            this.currentLang === 'ar' ? 'toast-top-left' : 'toast-top-right',
-        }
-      );
+      this.translateService
+        .get(['FORM.SUCCESS', 'FORM.TITLE_SUCCESS'])
+        .subscribe((translations) => {
+          this.toastrService.success(
+            translations['FORM.SUCCESS'],
+            translations['FORM.TITLE_SUCCESS'],
+            {
+              positionClass:
+                this.translateService.currentLang === 'ar'
+                  ? 'toast-top-left'
+                  : 'toast-top-right',
+            }
+          );
+        });
     } else {
       Object.keys(this.form.controls).forEach((key) => {
         const control = this.form.get(key);
         control?.markAsTouched();
       });
-      this.toastrService.error(
-        this.currentLang === 'ar'
-          ? 'الرجاء ملء جميع الحقول المطلوبة بشكل صحيح!'
-          : 'Please fill all required fields correctly!',
-        this.currentLang === 'ar' ? 'خطأ' : 'Error',
-        {
-          positionClass:
-            this.currentLang === 'ar' ? 'toast-top-left' : 'toast-top-right',
-        }
-      );
+      this.translateService
+        .get(['FORM.ERROR', 'FORM.TITLE_ERROR'])
+        .subscribe((translations) => {
+          this.toastrService.error(
+            translations['FORM.ERROR'],
+            translations['FORM.TITLE_ERROR'],
+            {
+              positionClass:
+                this.translateService.currentLang === 'ar'
+                  ? 'toast-top-left'
+                  : 'toast-top-right',
+            }
+          );
+        });
     }
   }
 
   get isFormValid(): boolean {
-  return this.form.valid && this.fileUploadService.files.length > 0;
+    return this.form.valid && this.fileUploadService.files.length > 0;
   }
-  
-
 }

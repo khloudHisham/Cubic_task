@@ -18,6 +18,14 @@
     "PHONE_INVALID": "الرجاء إدخال رقم هاتف صحيح مكون من 11 أرقام",
     "NAME_PLACEHOLDER": "أدخل اسمك الكامل",
     "EMAIL_PLACEHOLDER": "أدخل بريدك الإلكتروني",
-    "PHONE_PLACEHOLDER": "أدخل رقم هاتفك"
+    "PHONE_PLACEHOLDER": "أدخل رقم هاتفك",
+    "SUCCESS": "تم إرسال النموذج بنجاح!",
+    "ERROR": "الرجاء ملء جميع الحقول المطلوبة بشكل صحيح!",
+    "FILE_ADDED": "تمت إضافة الملفات بنجاح!",
+    "FILE_REMOVED": "تم حذف الملف بنجاح!",
+    "TITLE_SUCCESS": "نجاح",
+    "TITLE_ERROR": "خطأ",
+    "TITLE_INFO": "معلومة",
+    "TITLE_WARNING": "تحذير"
   }
 }

@@ -18,6 +18,14 @@
     "PHONE_INVALID": "Please enter a valid 11-digit phone number",
     "NAME_PLACEHOLDER": "Enter your full name",
     "EMAIL_PLACEHOLDER": "Enter your email address",
-    "PHONE_PLACEHOLDER": "Enter your phone number"
+    "PHONE_PLACEHOLDER": "Enter your phone number",
+    "SUCCESS": "Form submitted successfully!",
+    "ERROR": "Please fill all required fields correctly!",
+    "FILE_ADDED": "Files added successfully!",
+    "FILE_REMOVED": "File removed successfully!",
+    "TITLE_SUCCESS": "Success",
+    "TITLE_ERROR": "Error",
+    "TITLE_INFO": "Info",
+    "TITLE_WARNING": "Warning"
   }
 }
