@@ -15,17 +15,17 @@ import { MyTranslateService } from '../../shared/services/myTranslate/my-transla
   styleUrls: ['./customer-form.component.css'],
 })
 export class CustomerFormComponent {
-  private readonly fb = inject(FormBuilder);
-  private readonly translate = inject(TranslateService);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly translateService = inject(TranslateService);
   private readonly myTranslateService = inject(MyTranslateService);
   protected readonly fileUploadService = inject(FileUploadService);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastrService = inject(ToastrService);
 
   form: FormGroup;
   currentLang: string = 'en';
 
   constructor() {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phone: [
@@ -43,7 +43,7 @@ export class CustomerFormComponent {
 
   removeFile(index: number): void {
     this.fileUploadService.removeFile(index);
-    this.toastr.warning('File removed successfully!', 'Warning');
+    this.toastrService.warning('File removed successfully!', 'Warning');
   }
 
   async onFileDropped(event: DragEvent) {
@@ -51,7 +51,7 @@ export class CustomerFormComponent {
     if (event.dataTransfer?.items) {
       await this.fileUploadService.addFiles(event.dataTransfer.items);
     }
-    this.toastr.info('Files added successfully!', 'Info');
+    this.toastrService.info('Files added successfully!', 'Info');
   }
 
   async fileBrowseHandler(event: Event) {
@@ -64,16 +64,16 @@ export class CustomerFormComponent {
   switchLanguage(lang: string): void {
     this.myTranslateService.changeLangTranslate(lang);
     this.currentLang = lang;
-    this.translate.use(lang);
+    this.translateService.use(lang);
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    this.toastr.toastrConfig.positionClass =
+    this.toastrService.toastrConfig.positionClass =
       lang === 'ar' ? 'toast-top-left' : 'toast-top-right';
   }
 
   onSubmit(): void {
     if (this.form.valid) {
       console.log(this.form.value);
-      this.toastr.success(
+      this.toastrService.success(
         this.currentLang === 'ar'
           ? 'تم إرسال النموذج بنجاح!'
           : 'Form submitted successfully!',
@@ -88,7 +88,7 @@ export class CustomerFormComponent {
         const control = this.form.get(key);
         control?.markAsTouched();
       });
-      this.toastr.error(
+      this.toastrService.error(
         this.currentLang === 'ar'
           ? 'الرجاء ملء جميع الحقول المطلوبة بشكل صحيح!'
           : 'Please fill all required fields correctly!',
