@@ -66,6 +66,7 @@ export class CustomerFormComponent {
     this.currentLang = lang;
     this.translateService.use(lang);
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
     this.toastrService.toastrConfig.positionClass =
       lang === 'ar' ? 'toast-top-left' : 'toast-top-right';
   }
@@ -102,6 +103,8 @@ export class CustomerFormComponent {
   }
 
   get isFormValid(): boolean {
-    return this.form.valid;
+  return this.form.valid && this.fileUploadService.files.length > 0;
   }
+  
+
 }
