@@ -1,10 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { FileUploadService } from '../../shared/services/file-service/file-upload.service';
+import { MyTranslateService } from '../../shared/services/myTranslate/my-translate.service';
 
 @Component({
   selector: 'app-customer-form',
@@ -16,6 +17,7 @@ import { FileUploadService } from '../../shared/services/file-service/file-uploa
 export class CustomerFormComponent {
   private readonly fb = inject(FormBuilder);
   private readonly translate = inject(TranslateService);
+  private readonly myTranslateService = inject(MyTranslateService);
   protected readonly fileUploadService = inject(FileUploadService);
   private readonly toastr = inject(ToastrService);
 
@@ -31,6 +33,12 @@ export class CustomerFormComponent {
         [Validators.required, Validators.pattern('^01[0-2,5][0-9]{8}$')],
       ],
     });
+
+    this.currentLang = localStorage.getItem('lang') || 'ar';
+
+    this.myTranslateService.changeDirection();
+
+    this.switchLanguage(this.currentLang);
   }
 
   removeFile(index: number): void {
@@ -53,20 +61,11 @@ export class CustomerFormComponent {
     }
   }
 
-  initTranslate(): void {
-    this.translate.setDefaultLang('en');
-    this.translate.use('en');
-    this.currentLang = 'en';
-    document.documentElement.lang = 'en';
-    document.documentElement.dir = 'ltr';
-  }
-
   switchLanguage(lang: string): void {
+    this.myTranslateService.changeLangTranslate(lang);
     this.currentLang = lang;
     this.translate.use(lang);
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-
-    // Update toast position based on language
     this.toastr.toastrConfig.positionClass =
       lang === 'ar' ? 'toast-top-left' : 'toast-top-right';
   }
@@ -85,7 +84,6 @@ export class CustomerFormComponent {
         }
       );
     } else {
-      // Mark all fields as touched to trigger validation
       Object.keys(this.form.controls).forEach((key) => {
         const control = this.form.get(key);
         control?.markAsTouched();
